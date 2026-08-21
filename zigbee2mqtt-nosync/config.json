@@ -1,89 +1,89 @@
 {
-  "name": "Zigbee2MQTT No Time Sync",
-  "version": "1.0.0",
-  "slug": "zigbee2mqtt_nosync",
-  "description": "Zigbee2MQTT with Tuya time-sync disabled",
-  "arch": ["aarch64"],
-  "startup": "services",
+  "name": "Zigbee2MQTT",
+  "version": "2.13.0-1",
+  "slug": "zigbee2mqtt",
+  "description": "Use your ZigBee devices without the vendor's bridge or gateway",
+  "breaking_versions": [
+    "2.0.0-1"
+  ],
+  "uart": true,
+  "udev": true,
+  "url": "https://github.com/zigbee2mqtt/hassio-zigbee2mqtt/tree/master/zigbee2mqtt",
+  "startup": "application",
+  "services": [
+    "mqtt:need"
+  ],
+  "hassio_api": true,
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "boot": "auto",
+  "init": false,
+  "ingress": true,
+  "timeout": 30,
+  "panel_icon": "mdi:zigbee",
+  "map": [
+    {
+      "type": "share",
+      "read_only": false
+    },
+    {
+      "type": "homeassistant_config",
+      "read_only": false,
+      "path": "/config"
+    },
+    {
+      "type": "addon_config",
+      "read_only": false,
+      "path": "/addon_config"
+    }
+  ],
   "ports": {
-    "8080/tcp": 8080,
-    "8485/tcp": 8485
+    "8485/tcp": 8485,
+    "8099/tcp": null
   },
-  "host_network": true,
-  "map": ["config:rw", "share:rw"],
-  "privileged": ["SYS_ADMIN"],
+  "ports_description": {
+    "8485/tcp": "Socat tcp-listen port",
+    "8099/tcp": "Frontend tcp-listen port"
+  },
   "options": {
     "data_path": "/config/zigbee2mqtt",
-    "mqtt": {
-      "server": "mqtt://homeassistant",
-      "user": "",
-      "password": ""
-    },
-    "serial": {
-      "port": "auto",
-      "adapter": "auto"
-    },
-    "advanced": {
-      "log_level": "info",
-      "pan_id": 6754,
-      "channel": 11,
-      "network_key": [
-        1, 3, 5, 7, 9, 11, 13, 15,
-        0, 2, 4, 6, 8, 10, 12, 13
-      ],
-      "availability_blocklist": [],
-      "availability_passlist": []
-    },
-    "frontend": {
-      "port": 8080,
-      "host": "0.0.0.0"
-    },
-    "devices": "devices.yaml",
-    "groups": "groups.yaml",
-    "permit_join": false,
-    "watchdog": true,
     "socat": {
       "enabled": false,
-      "master": "pty,raw,echo=0,link=/dev/ttyZ2M",
+      "master": "pty,raw,echo=0,link=/tmp/ttyZ2M,mode=777",
       "slave": "tcp-listen:8485,keepalive,nodelay,reuseaddr,keepidle=1,keepintvl=1,keepcnt=5",
-      "options": "-d -d"
+      "options": "-d -d",
+      "log": false
     },
-    "homeassistant": true
+    "mqtt": {},
+    "serial": {}
   },
   "schema": {
     "data_path": "str",
+    "socat": {
+      "enabled": "bool?",
+      "master": "str?",
+      "slave": "str?",
+      "options": "str?",
+      "log": "bool?"
+    },
     "mqtt": {
-      "server": "str",
+      "server": "str?",
+      "ca": "str?",
+      "key": "str?",
+      "cert": "str?",
       "user": "str?",
-      "password": "str?"
+      "password": "str?",
+      "base_topic": "str?"
     },
     "serial": {
-      "port": "str",
-      "adapter": "str"
+      "port": "str?",
+      "adapter": "match(zstack|deconz|zigate|ezsp|ember|zboss)?",
+      "baudrate": "int?",
+      "rtscts": "bool?"
     },
-    "advanced": {
-      "log_level": "str",
-      "pan_id": "int",
-      "channel": "int",
-      "network_key": ["int"],
-      "availability_blocklist": ["str"],
-      "availability_passlist": ["str"]
-    },
-    "frontend": {
-      "port": "int",
-      "host": "str"
-    },
-    "devices": "str",
-    "groups": "str",
-    "permit_join": "bool",
-    "watchdog": "bool",
-    "socat": {
-      "enabled": "bool",
-      "master": "str",
-      "slave": "str",
-      "options": "str"
-    },
-    "homeassistant": "bool"
+    "watchdog": "str?",
+    "force_onboarding": "bool?"
   }
 }
