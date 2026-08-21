@@ -1,0 +1,17 @@
+{
+  "name": "Zigbee2MQTT NoSync",
+  "version": "1.0",
+  "slug": "zigbee2mqtt_nosync",
+  "description": "Zigbee2MQTT with patched Tuya time-sync disabled",
+  "arch": ["aarch64"],
+  "startup": "services",
+  "boot": "auto",
+  "image": "zigbee2mqtt-nosync",
+  "ports": {
+    "8080/tcp": 8080
+  },
+  "host_network": true,
+  "privileged": ["SYS_ADMIN"],
+  "options": {},
+  "schema": {}
+}
