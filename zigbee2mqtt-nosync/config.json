@@ -13,6 +13,5 @@
   "privileged": ["SYS_ADMIN"],
   "map": ["config:rw", "share:rw"],
   "options": {},
-  "schema": {},
-  "image": "ivoesilva/z2m-notimesync"
+  "schema": {}
 }
