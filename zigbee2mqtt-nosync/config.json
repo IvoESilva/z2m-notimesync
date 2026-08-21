@@ -35,10 +35,20 @@
       "availability_passlist": []
     },
     "frontend": {
-      "port": 8080
+      "port": 8080,
+      "host": "0.0.0.0"
     },
     "devices": "devices.yaml",
-    "groups": "groups.yaml"
+    "groups": "groups.yaml",
+    "permit_join": false,
+    "watchdog": true,
+    "socat": {
+      "enabled": false,
+      "master": "pty,raw,echo=0,link=/dev/ttyZ2M",
+      "slave": "tcp-listen:8485,keepalive,nodelay,reuseaddr,keepidle=1,keepintvl=1,keepcnt=5",
+      "options": "-d -d"
+    },
+    "homeassistant": true
   },
   "schema": {
     "data_path": "str",
@@ -60,9 +70,19 @@
       "availability_passlist": ["str"]
     },
     "frontend": {
-      "port": "int"
+      "port": "int",
+      "host": "str"
     },
     "devices": "str",
-    "groups": "str"
+    "groups": "str",
+    "permit_join": "bool",
+    "watchdog": "bool",
+    "socat": {
+      "enabled": "bool",
+      "master": "str",
+      "slave": "str",
+      "options": "str"
+    },
+    "homeassistant": "bool"
   }
 }
