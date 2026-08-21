@@ -37,6 +37,5 @@
     "advanced": {
       "log_level": "str"
     }
-  },
-  "image": "local/z2m-notimesync"
+  }
 }
