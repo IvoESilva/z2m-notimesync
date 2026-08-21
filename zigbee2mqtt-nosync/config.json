@@ -1,5 +1,5 @@
 {
-  "name": "Zigbee2MQTT NoSync",
+  "name": "Zigbee2MQTT No Time Sync",
   "version": "1.0.0",
   "slug": "zigbee2mqtt_nosync",
   "description": "Zigbee2MQTT with Tuya time-sync disabled",
@@ -10,8 +10,33 @@
     "8080/tcp": 8080
   },
   "host_network": true,
-  "privileged": ["SYS_ADMIN"],
   "map": ["config:rw", "share:rw"],
-  "options": {},
-  "schema": {}
+  "privileged": ["SYS_ADMIN"],
+  "options": {
+    "mqtt": {
+      "server": "mqtt://homeassistant",
+      "user": "",
+      "password": ""
+    },
+    "serial": {
+      "port": "auto"
+    },
+    "advanced": {
+      "log_level": "info"
+    }
+  },
+  "schema": {
+    "mqtt": {
+      "server": "str",
+      "user": "str?",
+      "password": "str?"
+    },
+    "serial": {
+      "port": "str"
+    },
+    "advanced": {
+      "log_level": "str"
+    }
+  },
+  "image": "local/z2m-notimesync"
 }
